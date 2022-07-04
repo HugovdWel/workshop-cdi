@@ -1,7 +1,7 @@
 # Introductie
 Deze workshop is deel van de DEA Course aan de Hogeschool Arnhem/Nijmegen. 
 
-Onderwerp is het bekend raken met CDI en het unittesten van een JavaEE applicatie.
+Onderwerp is het bekend raken met CDI en het unittesten van een Jakarta EE applicatie.
 
 # Oefening
 Deze oefening is het vervolg op de oefening [Simply the Rest](https://github.com/HANICA-DEA/workshop-simply-the-rest). 
@@ -15,18 +15,26 @@ Voeg aan je project een dependency op jUnit toe en schrijf een unittest voor de 
 
 ### 1.2: `ItemResource`
 Schrijf voor iedere methode uit de klasse `ItemResource` een zinnige unittest. Omdat deze methode gebruik maakt van de 
-`ItemService` en daar ook hard aan is gekopppeld, kun je alleen de happy-flow testen. Voor **nu** is dat voldoende!
+`ItemService` en daar ook hard aan is gekoppeld, kun je alleen de happy-flow testen. Voor **nu** is dat voldoende!
 
 Waarschijnlijk loop je nog wel tegen een probleem aan bij het testen van de methodes die een `Response` teruggeven.
-Lees de stacktrace goed door en gebruik Google om een oplossing te vinden.
 
-Om je alvast in de goede richting te helpen: 
-- Je JavaEE container levert een implementatie van `Response` op runtime:
-   - In je `pom.xml` is dit het `javaee-api` artifact met de scope `provided`
-- In de context van een unittest, heb je **niet** de beschikking over deze JavaEE Container. Dit zorgt voor de `Exception` 
-ergens in de teruggeven stacktrace, die klaagt over een missende *implementerende klasse*.
-- Om dit op te lossen breid je zelf je `pom.xml` uit, zoals de google zoekactie je vertelt:
-   - Extra `dependency` toevoegen met de scope `test`, zodat ook in de test de `Response` klasse een implementatie heeft.
+Allereerst een korte uitleg:
+- Je Jakarta EE container levert een implementatie van `Response` op runtime:
+   - In je `pom.xml` is dit het `jakarta.jakartaee-api` artifact met de scope `provided`
+- In de context van een unittest, heb je **niet** de beschikking over deze Jakarta EE Container. Dit zorgt voor de `Exception` 
+ergens in de teruggeven stacktrace, die klaagt over een missende *implementerende klasse*. 
+
+Om dit op te lossen breid je zelf je `pom.xml` uit:
+   - Extra `dependency` toevoegen met de scope `test`, zodat ook in de test de `Response` klasse een implementatie heeft:
+```xml 
+<dependency>
+    <groupId>org.glassfish.jersey.core</groupId>
+    <artifactId>jersey-client</artifactId>
+    <version>3.0.4</version>
+    <scope>test</scope>
+</dependency>
+```
 
 ## 2: Toevoegen Dependency Injection
 In het vorige onderdeel schreef je unittests en mogelijk liep je tegen het probleem aan dat je niet goed wist wat je nu 
@@ -55,12 +63,19 @@ van je IDE
 
 ### 2.2: Toepassen Dependency Injection
 De constructor van de `ItemResource` instantieert een nieuwe instantie van de `HardCodedItemService` en wijst deze toe aan 
-een instantie variabele. Deze verantwoordelijkheid dragen we over aan de JavaEE container, door gebruik te maken van CDI:
+een instantie variabele. Deze verantwoordelijkheid dragen we over aan de Jakarta EE container, door gebruik te maken van CDI:
 * Verwijder de volledige constructor van de `ItemResource`.
 * Creëer een setter voor de instantie variabele genaamd `itemService`.
 * Annoteer de setter met `@Inject`.
-* Om CDI 'aan' te zetten is het nog nodig om een *beans.xml* bestand op de juiste plek te zetten. Lees dit artikel voor 
-meer informatie hierover: [An Introduction to CDI ](https://www.baeldung.com/java-ee-cdi).
+* Om CDI 'aan' te zetten is het nog nodig om een *beans.xml* bestand op de juiste plek te zetten (src/main/resources/WEB-INF):
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+       version="3.0">
+</beans>
+```
 
 ## 3: Repareren van de unittests
 Door het toevoegen van Dependency Injection in stap 2 leveren nu de unittests `NullPointerException`s op.  In dit onderdeel 
@@ -153,9 +168,7 @@ Deploy je applicatie op TomEE en bekijk wat er gebeurt. Lees de stacktrace. Is d
 Je merkt als het goed is dat je de applicatie nu niet meer kan deployen. De applicatiecontainer weet namelijk niet welke 
 `ItemService` hij moet instantiëren en injecteren. Los dit op door aan te geven welke de *Default* implementatie is en welke de *Alternative*.
 
-* Bekijk weer: [An Introduction to CDI ](https://www.baeldung.com/java-ee-cdi) en zorg dat de `HardCodedItemService` de
-*Default* implementatie is. De andere is dan de *Alternative*
+* Bekijk de volgende bron: [Introduction to Contexts and Dependency Injection (CDI)](https://www.sitepoint.com/introduction-contexts-dependency-injection-cdi/), in het bijzonder de paragraaf "Qualifying Implementations with @Default and @Alternative" en zorg dat de `HardCodedItemService` de *Default* implementatie is. De andere is dan de *Alternative*
 
 ### 4.3 Configuratie via de `beans.xml
-Gebruik de `beans.xml` om te configureren dat CDI bij injectie gebruik maakt van de *Alternative*.
-* De eerder genoemde tutorial bevat deze informatie niet. Gebruik google om uit te zoeken hoe je dit moet doen
+Gebruik de `beans.xml` om te configureren dat CDI bij injectie gebruik maakt van de *Alternative*. Meer details hierover lees je in [Using Alternatives in CDI Applications](https://javaee.github.io/tutorial/cdi-adv002.html).
