@@ -1,13 +1,12 @@
-package nl.han.ica.oose.dea.resources;
+package nl.han.oose.dea.resources;
 
-import nl.han.ica.oose.dea.services.ItemService;
-import nl.han.ica.oose.dea.services.dto.ItemDTO;
-import nl.han.ica.oose.dea.services.exceptions.IdAlreadyInUseException;
-import nl.han.ica.oose.dea.services.exceptions.ItemNotAvailableException;
+import jakarta.ws.rs.core.Response;
+import nl.han.oose.dea.services.ItemService;
+import nl.han.oose.dea.services.dto.ItemDTO;
+import nl.han.oose.dea.services.exceptions.IdAlreadyInUseException;
+import nl.han.oose.dea.services.exceptions.ItemNotAvailableException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.ws.rs.core.Response;
 
 import java.util.ArrayList;
 

@@ -1,10 +1,9 @@
-package nl.han.ica.oose.dea.services;
+package nl.han.oose.dea.services;
 
-import nl.han.ica.oose.dea.services.dto.ItemDTO;
-import nl.han.ica.oose.dea.services.exceptions.IdAlreadyInUseException;
-import nl.han.ica.oose.dea.services.exceptions.ItemNotAvailableException;
+import nl.han.oose.dea.services.dto.ItemDTO;
+import nl.han.oose.dea.services.exceptions.IdAlreadyInUseException;
+import nl.han.oose.dea.services.exceptions.ItemNotAvailableException;
 
-import javax.enterprise.inject.Default;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
