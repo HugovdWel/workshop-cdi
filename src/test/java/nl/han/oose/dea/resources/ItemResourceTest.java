@@ -1,15 +1,14 @@
-package nl.han.ica.oose.dea.resources;
+package nl.han.oose.dea.resources;
 
-import nl.han.ica.oose.dea.services.dto.ItemDTO;
+import nl.han.oose.dea.services.dto.ItemDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.core.Response;
-
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class ItemResourceTest {
 
