@@ -1,17 +1,17 @@
-package nl.han.ica.oose.dea.resources;
+package nl.han.oose.dea.resources;
 
-import nl.han.ica.oose.dea.services.ItemService;
-import nl.han.ica.oose.dea.services.dto.ItemDTO;
-import nl.han.ica.oose.dea.services.exceptions.IdAlreadyInUseException;
-import nl.han.ica.oose.dea.services.exceptions.ItemNotAvailableException;
+import jakarta.ws.rs.core.Response;
+import nl.han.oose.dea.services.ItemService;
+import nl.han.oose.dea.services.dto.ItemDTO;
+import nl.han.oose.dea.services.exceptions.IdAlreadyInUseException;
+import nl.han.oose.dea.services.exceptions.ItemNotAvailableException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.core.Response;
-
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class ItemResourceTest {
@@ -22,15 +22,15 @@ class ItemResourceTest {
     private static final int HTTP_CREATED = 201;
 
     private ItemResource sut;
-    private ItemService mockedItemService;
+    private ItemService itemService;
 
     @BeforeEach
     void setup() {
         this.sut = new ItemResource();
 
-        this.mockedItemService = mock(ItemService.class);
+        this.itemService = mock(ItemService.class);
 
-        this.sut.setItemService(mockedItemService);
+        this.sut.setItemService(itemService);
     }
 
     @Test
@@ -48,7 +48,7 @@ class ItemResourceTest {
     void getJsonReturnsObjectFromServiceAsEntity() {
         // Arrange
         var itemsToReturn = new ArrayList<ItemDTO>();
-        when(mockedItemService.getAll()).thenReturn(itemsToReturn);
+        when(itemService.getAll()).thenReturn(itemsToReturn);
 
         // Act
         var response = sut.getJsonItems();
@@ -66,7 +66,7 @@ class ItemResourceTest {
         sut.getJsonItems();
 
         // Assert
-        verify(mockedItemService).getAll();
+        verify(itemService).getAll();
     }
 
     @Test
@@ -78,7 +78,7 @@ class ItemResourceTest {
         sut.addItem(item);
 
         // Assert
-        verify(mockedItemService).addItem(item);
+        verify(itemService).addItem(item);
     }
 
     @Test
@@ -97,7 +97,7 @@ class ItemResourceTest {
     void addItemsLetsIdAlreadyInUseExceptionPass() {
         // Arrange
         var item = new ItemDTO(37, "Chocolate spread", new String[]{"Breakfast, Lunch"}, "Not to much");
-        doThrow(IdAlreadyInUseException.class).when(mockedItemService).addItem(item);
+        doThrow(IdAlreadyInUseException.class).when(itemService).addItem(item);
 
         // Act & Assert
         assertThrows(IdAlreadyInUseException.class, () -> sut.addItem(item));
@@ -112,14 +112,14 @@ class ItemResourceTest {
         sut.getItem(ITEM_ID);
 
         // Assert
-        verify(mockedItemService).getItem(ITEM_ID);
+        verify(itemService).getItem(ITEM_ID);
     }
 
     @Test
     void getItemReturnsObjectFromServiceAsEntity() {
         // Arrange
         var item = new ItemDTO(ITEM_ID, "Chocolate spread", new String[]{"Breakfast, Lunch"}, "Not to much");
-        when(mockedItemService.getItem(ITEM_ID)).thenReturn(item);
+        when(itemService.getItem(ITEM_ID)).thenReturn(item);
 
         // Act
         Response response = sut.getItem(ITEM_ID);
@@ -132,7 +132,7 @@ class ItemResourceTest {
     void getItemReturnsHttp200() {
         // Arrange
         var item = new ItemDTO(ITEM_ID, "Chocolate spread", new String[]{"Breakfast, Lunch"}, "Not to much");
-        when(mockedItemService.getItem(ITEM_ID)).thenReturn(item);
+        when(itemService.getItem(ITEM_ID)).thenReturn(item);
 
         // Act
         Response response = sut.getItem(ITEM_ID);
@@ -144,7 +144,7 @@ class ItemResourceTest {
     @Test
     void getItemLetsItemNotAvailableExceptionPass() {
         // Arrange
-        doThrow(ItemNotAvailableException.class).when(mockedItemService).getItem(ITEM_ID);
+        doThrow(ItemNotAvailableException.class).when(itemService).getItem(ITEM_ID);
 
         // Act & Assert
         assertThrows(ItemNotAvailableException.class, () -> sut.getItem(ITEM_ID));
@@ -158,7 +158,7 @@ class ItemResourceTest {
         sut.deleteItem(ITEM_ID);
 
         // Assert
-        verify(mockedItemService).deleteItem(ITEM_ID);
+        verify(itemService).deleteItem(ITEM_ID);
     }
 
     @Test
@@ -175,7 +175,7 @@ class ItemResourceTest {
     @Test
     void deleteItemLetsItemNotAvailableExceptionPass() {
         // Arrange
-        doThrow(ItemNotAvailableException.class).when(mockedItemService).deleteItem(ITEM_ID);
+        doThrow(ItemNotAvailableException.class).when(itemService).deleteItem(ITEM_ID);
 
         // Act & Assert
         assertThrows(ItemNotAvailableException.class, () -> sut.deleteItem(ITEM_ID));

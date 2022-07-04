@@ -1,12 +1,12 @@
-package nl.han.ica.oose.dea.resources;
+package nl.han.oose.dea.resources;
 
-import nl.han.ica.oose.dea.services.ItemService;
-import nl.han.ica.oose.dea.services.dto.ItemDTO;
-
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import nl.han.oose.dea.services.HardCodedItemService;
+import nl.han.oose.dea.services.ItemService;
+import nl.han.oose.dea.services.dto.ItemDTO;
 
 @Path("/items")
 public class ItemResource {

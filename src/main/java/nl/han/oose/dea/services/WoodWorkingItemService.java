@@ -1,28 +1,24 @@
-package nl.han.ica.oose.dea.services;
+package nl.han.oose.dea.services;
 
-import nl.han.ica.oose.dea.services.dto.ItemDTO;
-import nl.han.ica.oose.dea.services.exceptions.IdAlreadyInUseException;
-import nl.han.ica.oose.dea.services.exceptions.ItemNotAvailableException;
+import jakarta.enterprise.inject.Alternative;
+import nl.han.oose.dea.services.dto.ItemDTO;
+import nl.han.oose.dea.services.exceptions.IdAlreadyInUseException;
+import nl.han.oose.dea.services.exceptions.ItemNotAvailableException;
 
-import javax.enterprise.inject.Default;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * The {@code ItemService} can be used for accessing a {@link List} of {@link ItemDTO} instances, but also
- * for adding instances to and deleting from the {@link List}.
- */
-@Default
-public class HardCodedItemService implements ItemService {
+@Alternative
+public class WoodWorkingItemService implements ItemService {
 
     private List<ItemDTO> items = new ArrayList<>();
 
-    public HardCodedItemService() {
-        items.add(new ItemDTO(1, "Bread", new String[]{"Breakfast, Lunch"}, "Delicious!"));
-        items.add(new ItemDTO(2, "Butter", new String[]{"Breakfast, Lunch"}, "Use it with bread"));
-        items.add(new ItemDTO(3, "Honey", new String[]{"Breakfast, Lunch"}, "Use it with bread"));
+    public WoodWorkingItemService() {
+        items.add(new ItemDTO(1, "Saw", new String[]{"Carpentry"}, "Keep it sharp"));
+        items.add(new ItemDTO(2, "Chisel", new String[]{"Carpentry"}, "Keep it sharp"));
+        items.add(new ItemDTO(3, "Plane", new String[]{"Carpentry"}, "Keep it sharp"));
     }
 
     @Override
@@ -38,6 +34,7 @@ public class HardCodedItemService implements ItemService {
 
         items.add(itemDTO);
     }
+
 
     @Override
     public ItemDTO getItem(int id) {

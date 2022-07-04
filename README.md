@@ -73,11 +73,11 @@ een `ItemService`, die vervolgens via een *setter* op de SUT geplaatst moet word
 een instantie voor maken van een `ItemService`, bijvoorbeeld de `HardCodedItemService`, dan blijft onze
 unittest afhankelijk van die `HardCodedItemService`. Wanneer een test faalt, dan kan dit nog steeds komen
 doordat er een bug zit in de `ItemResource` of de `HardCodedItemService`. Een zeer onwenselijke situatie, 
-die we gaan oplossen door geen *echte* `ItemService` te gebruiken, maar een gemockte.
+die we gaan oplossen door geen *echte* `ItemResource` te gebruiken, maar een gemockte.
 * Voeg een dependency toe op de laatste versie van [Mockito](https://site.mockito.org/) (kies voor het artifactId: *mockito-core*)
 * Voeg aan je testklasse de volgende instantie variabele toe:
 ```        
-    private ItemService mockedItemService;
+    private ItemService itemService;
 ```
 * Gebruik de `setup()` methode om een gemockte `ItemService` aan je SUT toe te voegen:
 ```
@@ -86,10 +86,10 @@ die we gaan oplossen door geen *echte* `ItemService` te gebruiken, maar een gemo
         this.sut = new ItemResource();
         
         // Gebruik Mockito om een instantie te maken
-        this.mockedItemService = Mockito.mock(ItemService.class);
+        this.itemService = Mockito.mock(ItemService.class);
         
-        // Gebruik de setter om de mockedItemService te zetten
-        this.sut.setItemService(mockedItemService);
+        // Gebruik de setter om de ItemService te zetten
+        this.sut.setItemService(itemService);
     }
 ```
 
@@ -142,26 +142,3 @@ de exceptie van het juiste type wordt gegooit. Gebruik eventueel deze [tutorial]
 test je of de verwachtte exceptie ook daadwerkelijk wordt gegooit. Gebruik eventueel deze [tutorial](https://howtodoinjava.com/junit5/expected-exception-example/).
 
 ## 4: Injecteren van een alternatieve `ItemService`
-We gaan een tweede klasse maken die de interface `ItemService` implementeerd. Vervolgens
-zullen we via de `beans.xml` gaan configureren welke van de twee implementaties wordt
-geïnjecteerd.
-
-### 4.1 Een tweede implementatie
-Maak een tweede klasse die de interface `ItemService` implementeerd. Zorg voor een zinnige
-implementatie.
-
-Deploy je applicatie op TomEE en bekijk wat er gebeurt. Lees de stacktrace. Is dit wat je 
-verwacht?
-
-### 4.2 Toevoegen van de benodigde annotaties
-Je zal gemerkt hebben dat de applicatie nu niet meer gedeployed kan worden. De applicatiecontainer
-weet namelijk niet welke `ItemService` hij moet instantiëren en injecteren. Dit kan opgelost
-worden door aan te geven welke de *Default* implementatie is en welke de *Alternative*.
-
-* Bekijk weer: [An Introduction to CDI ](https://www.baeldung.com/java-ee-cdi) en zorg ervoor dat de
-`HardCodedItemService` de *Default* implementatie is. De andere is dan de *Alternative*.
-
-### 4.3 Configuratie via de `beans.xml
-Gebruik de `beans.xml` om te configuren dat er voor injectie gebruik moet worden gemaakt van de *Alternative*.
-
-* De eerder genoemde tutorial bevat deze informatie niet. Gebruik google om uit te zoeken hoe je dit moet doen.
