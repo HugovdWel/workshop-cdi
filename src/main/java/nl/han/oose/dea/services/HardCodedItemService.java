@@ -1,8 +1,9 @@
-package nl.han.ica.oose.dea.services;
+package nl.han.oose.dea.services;
 
-import nl.han.ica.oose.dea.services.dto.ItemDTO;
-import nl.han.ica.oose.dea.services.exceptions.IdAlreadyInUseException;
-import nl.han.ica.oose.dea.services.exceptions.ItemNotAvailableException;
+import jakarta.enterprise.inject.Default;
+import nl.han.oose.dea.services.dto.ItemDTO;
+import nl.han.oose.dea.services.exceptions.IdAlreadyInUseException;
+import nl.han.oose.dea.services.exceptions.ItemNotAvailableException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
  * The {@code ItemService} can be used for accessing a {@link List} of {@link ItemDTO} instances, but also
  * for adding instances to and deleting from the {@link List}.
  */
+@Default
 public class HardCodedItemService implements ItemService {
 
     private List<ItemDTO> items = new ArrayList<>();
