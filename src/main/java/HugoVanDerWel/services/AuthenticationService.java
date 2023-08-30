@@ -1,6 +1,7 @@
 package HugoVanDerWel.services;
 
-import HugoVanDerWel.Models.UserModel;
+import HugoVanDerWel.exceptions.UserNotFoundException;
+import HugoVanDerWel.models.UserModel;
 import HugoVanDerWel.persistence.UserPersistence;
 import jakarta.inject.Inject;
 
@@ -16,7 +17,12 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     public boolean verifyPassword(UserModel userModel){
-        return Objects.equals(userPersistence.getPasswordForUser(userModel).password, userModel.password);
+        try{
+            String inputPassword = userModel.password;
+            return userPersistence.getPasswordForUser(userModel).password.equals(inputPassword);
+        } catch (UserNotFoundException e){
+            return false;
+        }
     }
 
     public boolean verifyToken(UserModel userModel){
@@ -33,10 +39,7 @@ public class AuthenticationService implements IAuthenticationService {
 
     private String generateToken(){
         Random random = new Random();
-        int token = 0;
-        for (int i = 0; i < 20; i++) {
-            token += random.nextInt();
-        }
+        int token = random.nextInt(100000, 999999);
         return String.valueOf(token);
     }
 }

@@ -1,4 +1,4 @@
-package HugoVanDerWel.DataTransferObjects;
+package HugoVanDerWel.dataTransferObjects;
 
 public class LoginRequestDTO {
 
@@ -6,6 +6,6 @@ public class LoginRequestDTO {
 
     }
 
-    public String username;
+    public String user;
     public String password;
 }

@@ -1,7 +1,10 @@
 package HugoVanDerWel.persistence;
 
-import HugoVanDerWel.Models.UserModel;
+import HugoVanDerWel.exceptions.UserNotFoundException;
+import HugoVanDerWel.models.UserModel;
 import HugoVanDerWel.services.Database;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import com.microsoft.sqlserver.jdbc.SQLServerResultSet;
 import jakarta.inject.Inject;
 
 import java.sql.Connection;
@@ -18,18 +21,21 @@ public class UserPersistence {
         this.db = db;
     }
 
-    public UserModel getPasswordForUser(UserModel user) {
+    public UserModel getPasswordForUser(UserModel user) throws UserNotFoundException {
         try {
             Connection connection = db.getConnection();
             PreparedStatement query = connection.prepareStatement(
                     "SELECT userhash FROM spotitubeUser u WHERE u.username = ?");
             query.setString(1, user.username);
             ResultSet resultset = query.executeQuery();
-            user.password = resultset.getString("userhash");
-            return user;
+            if (resultset.next()) {
+                user.password = resultset.getString("userhash");
+                return user;
+            }
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
+        throw new UserNotFoundException();
     }
 
     public UserModel getTokenForUser(UserModel user) {
@@ -42,7 +48,7 @@ public class UserPersistence {
             user.token = resultset.getString("token");
             return user;
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
     }
 
@@ -51,12 +57,12 @@ public class UserPersistence {
         try {
             Connection connection = db.getConnection();
             PreparedStatement query = connection.prepareStatement(
-                    "UPDATE User SET token = ? WHERE username = ?");
+                    "UPDATE spotitubeUser SET token = ? WHERE username = ?");
             query.setString(1, user.token);
             query.setString(2, user.username);
-            query.executeQuery();
+            query.executeUpdate();
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
         return user;
     }
@@ -71,6 +77,7 @@ public class UserPersistence {
             user.username = resultset.getString("username");
             return user;
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
-        }    }
+            throw new RuntimeException("A database error has occurred.");
+        }
+    }
 }

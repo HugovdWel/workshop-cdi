@@ -1,6 +1,6 @@
 package HugoVanDerWel.services;
 
-import HugoVanDerWel.Models.UserModel;
+import HugoVanDerWel.models.UserModel;
 
 public interface IAuthenticationService {
     boolean verifyPassword(UserModel userModel);

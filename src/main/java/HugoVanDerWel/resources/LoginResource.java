@@ -1,7 +1,7 @@
 package HugoVanDerWel.resources;
 
-import HugoVanDerWel.DataTransferObjects.LoginRequestDTO;
-import HugoVanDerWel.Models.UserModel;
+import HugoVanDerWel.dataTransferObjects.LoginRequestDTO;
+import HugoVanDerWel.models.UserModel;
 import HugoVanDerWel.services.AuthenticationService;
 import jakarta.inject.Inject;
 
@@ -28,7 +28,7 @@ public class LoginResource {
     @Produces(APPLICATION_JSON)
     public Response login(LoginRequestDTO loginRequestDTO) {
         UserModel userModel = new UserModel(){{
-            username = loginRequestDTO.username;
+            username = loginRequestDTO.user;
             password = loginRequestDTO.password;
         }};
         if (!authenticationService.verifyPassword(userModel)) {

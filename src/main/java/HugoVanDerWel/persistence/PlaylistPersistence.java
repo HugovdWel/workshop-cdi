@@ -1,8 +1,8 @@
 package HugoVanDerWel.persistence;
 
-import HugoVanDerWel.Models.PlaylistModel;
-import HugoVanDerWel.Models.TrackModel;
-import HugoVanDerWel.Models.UserModel;
+import HugoVanDerWel.models.PlaylistModel;
+import HugoVanDerWel.models.TrackModel;
+import HugoVanDerWel.models.UserModel;
 import HugoVanDerWel.services.Database;
 import jakarta.inject.Inject;
 
@@ -39,7 +39,7 @@ public class PlaylistPersistence {
             }
             return playlists.toArray(PlaylistModel[]::new);
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
     }
 
@@ -51,7 +51,7 @@ public class PlaylistPersistence {
             query.setInt(1, id);
             query.executeUpdate();
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
     }
 
@@ -65,7 +65,7 @@ public class PlaylistPersistence {
             query.executeUpdate();
         }
         catch(RuntimeException | SQLException e){
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
     }
 
@@ -92,7 +92,7 @@ public class PlaylistPersistence {
             }
             return tracks.toArray(TrackModel[]::new);
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
     }
 
@@ -106,7 +106,7 @@ public class PlaylistPersistence {
             query.setInt(4, track.playcount);
             query.executeUpdate();
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
     }
 
@@ -118,7 +118,7 @@ public class PlaylistPersistence {
             query.setInt(2, trackId);
             query.executeUpdate();
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new RuntimeException("A database error has occurred.");
         }
     }
 }

@@ -1,7 +1,7 @@
 package HugoVanDerWel.resources;
 
-import HugoVanDerWel.Models.PlaylistModel;
-import HugoVanDerWel.Models.TrackModel;
+import HugoVanDerWel.models.PlaylistModel;
+import HugoVanDerWel.models.TrackModel;
 import HugoVanDerWel.services.AuthenticationService;
 import HugoVanDerWel.services.PlaylistService;
 import jakarta.inject.Inject;

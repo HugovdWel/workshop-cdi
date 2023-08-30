@@ -1,6 +1,6 @@
-package HugoVanDerWel.DataTransferObjects;
+package HugoVanDerWel.dataTransferObjects;
 
-import HugoVanDerWel.Models.PlaylistModel;
+import HugoVanDerWel.models.PlaylistModel;
 
 public class PlayListsDTO {
     public PlaylistModel[] playlists;

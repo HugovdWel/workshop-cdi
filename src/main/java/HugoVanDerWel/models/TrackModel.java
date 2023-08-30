@@ -1,4 +1,4 @@
-package HugoVanDerWel.Models;
+package HugoVanDerWel.models;
 
 import java.util.Date;
 

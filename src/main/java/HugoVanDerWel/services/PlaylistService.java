@@ -1,9 +1,9 @@
 package HugoVanDerWel.services;
 
-import HugoVanDerWel.DataTransferObjects.PlayListsDTO;
-import HugoVanDerWel.Models.PlaylistModel;
-import HugoVanDerWel.Models.TrackModel;
-import HugoVanDerWel.Models.UserModel;
+import HugoVanDerWel.dataTransferObjects.PlayListsDTO;
+import HugoVanDerWel.models.PlaylistModel;
+import HugoVanDerWel.models.TrackModel;
+import HugoVanDerWel.models.UserModel;
 import HugoVanDerWel.persistence.PlaylistPersistence;
 import jakarta.inject.Inject;
 
