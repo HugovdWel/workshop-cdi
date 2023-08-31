@@ -41,19 +41,18 @@ public class PlaylistService {
         playlistPersistence.deletePlaylist(id);
     }
 
-    public void createPlaylist(PlaylistModel inputPlaylistModel) {
+    public void createPlaylist(PlaylistModel inputPlaylistModel, UserModel playlistOwner) {
         playlistPersistence.createPlaylist(
                 new PlaylistModel() {{
-                    id = 0;
+                    ownerName = playlistOwner.username;
                     name = inputPlaylistModel.name;
-                    tracks = inputPlaylistModel.tracks;
                 }});
     }
 
-    public void replacePlaylist(PlaylistModel newPlaylistModel, int playlistId) {
+    public void replacePlaylist(PlaylistModel newPlaylistModel, int playlistId, UserModel owner) {
         this.deletePlaylist(playlistId);
         newPlaylistModel.id = playlistId;
-        this.createPlaylist(newPlaylistModel);
+        this.createPlaylist(newPlaylistModel, owner);
     }
 
     public TrackModel[] getTracksInPlaylist(int playlistId) {

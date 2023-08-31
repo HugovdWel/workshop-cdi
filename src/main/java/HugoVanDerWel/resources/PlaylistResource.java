@@ -61,7 +61,7 @@ public class PlaylistResource {
     public Response createPlaylist(@QueryParam("token") String inputToken, PlaylistModel newPlaylist) {
         try {
             UserModel owner = authenticationService.getUsernameForToken(inputToken);
-            this.playlistService.createPlaylist(newPlaylist);
+            this.playlistService.createPlaylist(newPlaylist, owner);
             return Response.status(200).entity(this.playlistService.getAllPlaylists(owner)).build();
         } catch (UnauthorizedException e) {
             return Response.status(403).build();
@@ -74,7 +74,7 @@ public class PlaylistResource {
     public Response editPlaylist(@QueryParam("token") String inputToken, PlaylistModel newPlaylist, @PathParam("id") int id) {
         try {
             UserModel owner = authenticationService.getUsernameForToken(inputToken);
-            this.playlistService.replacePlaylist(newPlaylist, id);
+            this.playlistService.replacePlaylist(newPlaylist, id, owner);
             return Response.status(200).entity(this.playlistService.getAllPlaylists(owner)).build();
         } catch (UnauthorizedException e) {
             return Response.status(403).build();

@@ -58,9 +58,9 @@ public class PlaylistPersistence {
     public void createPlaylist(PlaylistModel playlistModel) {
         try {
             Connection connection = db.getConnection();
-            PreparedStatement query = connection.prepareStatement("INSERT INTO Playlist (playlistname, username) VALUES (?, ?)");
+            PreparedStatement query = connection.prepareStatement("INSERT INTO Playlist (name, owner) VALUES (?, ?)");
             query.setString(1, playlistModel.name);
-            query.setString(2, String.valueOf(playlistModel.ownerName));
+            query.setString(2, playlistModel.ownerName);
             query.executeUpdate();
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
