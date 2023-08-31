@@ -38,6 +38,7 @@ public class PlaylistPersistence {
                 }});
             }
             if(playlists.isEmpty()) return new PlaylistModel[]{};
+            connection.close();
             return playlists.toArray(new PlaylistModel[0]);
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
@@ -50,6 +51,7 @@ public class PlaylistPersistence {
             PreparedStatement query = connection.prepareStatement("DELETE FROM Playlist WHERE ID = ?");
             query.setInt(1, id);
             query.executeUpdate();
+            connection.close();
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
         }
@@ -62,6 +64,7 @@ public class PlaylistPersistence {
             query.setString(1, playlistModel.name);
             query.setString(2, playlistModel.ownerName);
             query.executeUpdate();
+            connection.close();
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
         }
@@ -74,6 +77,7 @@ public class PlaylistPersistence {
             query.setString(1, playlistModel.name);
             query.setInt(2, playlistModel.id);
             query.executeUpdate();
+            connection.close();
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
         }
@@ -94,12 +98,13 @@ public class PlaylistPersistence {
                     duration = resultset.getInt("duration");
                     album = resultset.getString("album");
 //                    playcount = resultset.get;
-                    date = resultset.getDate("publicationdate");
+                    publicationDate = resultset.getDate("publicationdate");
                     description = resultset.getString("description");
 //                    offlineAvailable = resultset.get;
                 }});
             }
             if(tracks.isEmpty()) return new TrackModel[]{};
+            connection.close();
             return tracks.toArray(new TrackModel[0]);
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
@@ -120,26 +125,27 @@ public class PlaylistPersistence {
                     performer = resultset.getString("performer");
                     duration = resultset.getInt("duration");
                     album = resultset.getString("album");
-                    date = resultset.getDate("publicationdate");
+                    publicationDate = resultset.getDate("publicationdate");
                     description = resultset.getString("description");
                 }});
             }
             if(tracks.isEmpty()) return new TrackModel[]{};
+            connection.close();
             return tracks.toArray(new TrackModel[0]);
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
         }
     }
 
-    public void addTrackToPlaylist(int playlistId, TrackModel track) {
+    public void addTrackToPlaylist(int playlistId, int trackId, boolean offlineAvailable) {
         try {
             Connection connection = db.getConnection();
-            PreparedStatement query = connection.prepareStatement("INSERT INTO Track_in_playlist (playlistId, trackId, offlineAvailable, playCount) VALUES (?, ?, ?, ?)");
+            PreparedStatement query = connection.prepareStatement("INSERT INTO Track_in_playlist (playlistId, trackId, offlineAvailable) VALUES (?, ?, ?)");
             query.setInt(1, playlistId);
-            query.setInt(2, track.id);
-            query.setBoolean(3, track.offlineAvailable);
-            query.setInt(4, track.playcount);
+            query.setInt(2, trackId);
+            query.setBoolean(3, offlineAvailable);
             query.executeUpdate();
+            connection.close();
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
         }
@@ -152,6 +158,7 @@ public class PlaylistPersistence {
             query.setInt(1, playlistId);
             query.setInt(2, trackId);
             query.executeUpdate();
+            connection.close();
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
         }

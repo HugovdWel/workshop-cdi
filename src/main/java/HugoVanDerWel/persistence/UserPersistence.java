@@ -60,10 +60,11 @@ public class UserPersistence {
             query.setString(1, user.token);
             query.setString(2, user.username);
             query.executeUpdate();
+            connection.close();
+            return user;
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("A database error has occurred.");
         }
-        return user;
     }
 
     public UserModel getUsernameForToken(UserModel user) {
@@ -74,6 +75,7 @@ public class UserPersistence {
             ResultSet resultset = query.executeQuery();
             if (resultset.next()) {
                 user.username = resultset.getString("username");
+                connection.close();
                 return user;
             }
         } catch (RuntimeException | SQLException e) {

@@ -76,7 +76,7 @@ public class PlaylistService {
     }
 
     public void addTrackToPlaylist(int playlistId, TrackModel track) {
-        this.playlistPersistence.addTrackToPlaylist(playlistId, track);
+        this.playlistPersistence.addTrackToPlaylist(playlistId, track.id, track.offlineAvailable);
     }
 
     public void removeTrackFromPlaylist(int playlistId, int trackId) {

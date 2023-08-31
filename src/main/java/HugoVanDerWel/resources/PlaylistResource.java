@@ -90,10 +90,10 @@ public class PlaylistResource {
 
     @POST
     @Path("/{id}/tracks")
-    @Produces(APPLICATION_JSON)
-    public Response addTrackToPlaylist(@QueryParam("token") String inputToken, @PathParam("id") int id, TrackModel track) {
-        this.playlistService.addTrackToPlaylist(id, track);
-        return Response.status(200).entity(this.playlistService.getTracksInPlaylist(id)).build();
+    @Produces(APPLICATION_JSON) // TODO: Does not accept undefined, works otherwise
+    public Response addTrackToPlaylist(@QueryParam("token") String inputToken, @PathParam("id") int playlistId, TrackModel track) {
+        this.playlistService.addTrackToPlaylist(playlistId, track);
+        return Response.status(200).entity(this.playlistService.getTracksInPlaylist(playlistId)).build();
     }
 
     @DELETE

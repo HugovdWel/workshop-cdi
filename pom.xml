@@ -21,6 +21,13 @@
     </properties>
 
     <dependencies>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-client &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-client</artifactId>-->
+<!--            <version>6.2.5.Final</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
