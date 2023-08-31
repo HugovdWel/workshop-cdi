@@ -106,6 +106,31 @@ public class PlaylistPersistence {
         }
     }
 
+    public TrackModel[] getTracksNotInPlaylist(int playlistId) {
+        try {
+            Connection connection = db.getConnection();
+            PreparedStatement query = connection.prepareStatement("SELECT t.trackId, title, performer, duration, album, publicationdate, description FROM Track t WHERE trackId NOT IN (SELECT trackId FROM Track_in_playlist where playlistId = ?)");
+            query.setInt(1, playlistId);
+            ResultSet resultset = query.executeQuery();
+            List<TrackModel> tracks = new ArrayList<>();
+            while (resultset.next()) {
+                tracks.add(new TrackModel() {{
+                    id = resultset.getInt("trackId");
+                    title = resultset.getString("title");
+                    performer = resultset.getString("performer");
+                    duration = resultset.getInt("duration");
+                    album = resultset.getString("album");
+                    date = resultset.getDate("publicationdate");
+                    description = resultset.getString("description");
+                }});
+            }
+            if(tracks.isEmpty()) return new TrackModel[]{};
+            return tracks.toArray(new TrackModel[0]);
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("A database error has occurred.");
+        }
+    }
+
     public void addTrackToPlaylist(int playlistId, TrackModel track) {
         try {
             Connection connection = db.getConnection();

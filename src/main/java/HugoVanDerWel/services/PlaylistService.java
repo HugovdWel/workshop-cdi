@@ -1,6 +1,7 @@
 package HugoVanDerWel.services;
 
 import HugoVanDerWel.dataTransferObjects.PlayListsDTO;
+import HugoVanDerWel.dataTransferObjects.TracksDTO;
 import HugoVanDerWel.models.PlaylistModel;
 import HugoVanDerWel.models.TrackModel;
 import HugoVanDerWel.models.UserModel;
@@ -62,8 +63,16 @@ public class PlaylistService {
         }});
     }
 
-    public TrackModel[] getTracksInPlaylist(int playlistId) {
-        return playlistPersistence.getTracksInPlaylist(playlistId);
+    public TracksDTO getTracksInPlaylist(int playlistId) {
+        return new TracksDTO(){{
+            tracks = playlistPersistence.getTracksInPlaylist(playlistId);
+        }};
+    }
+
+    public TracksDTO getTracksNotInPlaylist(int playlistId) {
+        return new TracksDTO(){{
+            tracks = playlistPersistence.getTracksNotInPlaylist(playlistId);
+        }};
     }
 
     public void addTrackToPlaylist(int playlistId, TrackModel track) {
