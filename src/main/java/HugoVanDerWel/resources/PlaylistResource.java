@@ -71,10 +71,10 @@ public class PlaylistResource {
     @PUT
     @Path("/{id}")
     @Produces(APPLICATION_JSON)
-    public Response editPlaylist(@QueryParam("token") String inputToken, PlaylistModel newPlaylist, @PathParam("id") int id) {
+    public Response editPlaylistName(@QueryParam("token") String inputToken, PlaylistModel newPlaylist, @PathParam("id") int id) {
         try {
             UserModel owner = authenticationService.getUsernameForToken(inputToken);
-            this.playlistService.replacePlaylist(newPlaylist, id, owner);
+            this.playlistService.editPlaylistName(newPlaylist.name, id);
             return Response.status(200).entity(this.playlistService.getAllPlaylists(owner)).build();
         } catch (UnauthorizedException e) {
             return Response.status(403).build();

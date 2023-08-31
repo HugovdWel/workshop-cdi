@@ -67,6 +67,18 @@ public class PlaylistPersistence {
         }
     }
 
+    public void updatePlaylistName(PlaylistModel playlistModel) {
+        try {
+            Connection connection = db.getConnection();
+            PreparedStatement query = connection.prepareStatement("UPDATE Playlist SET name = ? WHERE id = ?");
+            query.setString(1, playlistModel.name);
+            query.setInt(2, playlistModel.id);
+            query.executeUpdate();
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("A database error has occurred.");
+        }
+    }
+
     public TrackModel[] getTracksInPlaylist(int playlistId) {
         try {
             Connection connection = db.getConnection();

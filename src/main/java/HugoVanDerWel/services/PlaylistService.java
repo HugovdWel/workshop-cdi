@@ -55,6 +55,13 @@ public class PlaylistService {
         this.createPlaylist(newPlaylistModel, owner);
     }
 
+    public void editPlaylistName(String newName, int playlistId) {
+        playlistPersistence.updatePlaylistName(new PlaylistModel(){{
+            id = playlistId;
+            name = newName;
+        }});
+    }
+
     public TrackModel[] getTracksInPlaylist(int playlistId) {
         return playlistPersistence.getTracksInPlaylist(playlistId);
     }
