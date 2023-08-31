@@ -1,5 +1,6 @@
 package HugoVanDerWel.services;
 
+import HugoVanDerWel.exceptions.UnauthorizedException;
 import HugoVanDerWel.exceptions.UserNotFoundException;
 import HugoVanDerWel.models.UserModel;
 import HugoVanDerWel.persistence.UserPersistence;
@@ -26,7 +27,11 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     public boolean verifyToken(UserModel userModel){
-        return Objects.equals(userPersistence.getTokenForUser(userModel).token, userModel.token);
+        try{
+            return Objects.equals(userPersistence.getTokenForUser(userModel).token, userModel.token);
+        } catch (UnauthorizedException e){
+            return false;
+        }
     }
 
     public UserModel generateNewTokenForUser(UserModel userModel){
@@ -34,7 +39,14 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     public UserModel getUsernameForToken(String inputToken){
+        if(inputToken == null){
+            throw new UnauthorizedException();
+        }
+        try{
         return this.userPersistence.getUsernameForToken(new UserModel(){{token = inputToken;}});
+        } catch (RuntimeException e) {
+            throw new UnauthorizedException();
+        }
     }
 
     private String generateToken(){

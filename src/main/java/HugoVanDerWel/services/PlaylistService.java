@@ -7,6 +7,8 @@ import HugoVanDerWel.models.UserModel;
 import HugoVanDerWel.persistence.PlaylistPersistence;
 import jakarta.inject.Inject;
 
+import java.util.Arrays;
+
 public class PlaylistService {
 
     @Inject
@@ -14,9 +16,24 @@ public class PlaylistService {
 
     public PlayListsDTO getAllPlaylists(UserModel owner) {
         PlaylistModel[] playlistModels = playlistPersistence.getAllPlaylists(owner);
+        if(playlistModels.length == 0){
+            return new PlayListsDTO();
+        }
+        int totalPlayLength = 0;
+
+        for (PlaylistModel playlistModel : playlistModels) {
+            int playlistPlayLength = 0;
+            playlistModel.tracks = playlistPersistence.getTracksInPlaylist(playlistModel.id);
+            for (TrackModel trackModel : playlistModel.tracks) {
+                playlistPlayLength += trackModel.duration;
+            }
+            totalPlayLength += playlistPlayLength;
+        }
+
+        int finalTotalPlayLength = totalPlayLength;
         return new PlayListsDTO() {{
             playlists = playlistModels;
-            length = playlists.length;
+            length = finalTotalPlayLength;
         }};
     }
 

@@ -27,21 +27,16 @@ public class LoginResource {
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
     public Response login(LoginRequestDTO loginRequestDTO) {
-        UserModel userModel = new UserModel(){{
+        UserModel userModel = new UserModel() {{
             username = loginRequestDTO.user;
             password = loginRequestDTO.password;
         }};
         if (!authenticationService.verifyPassword(userModel)) {
             return Response.status(304).build();
         }
-        userModel = authenticationService.generateNewTokenForUser(userModel);
-        userModel.password = null;
-        return Response.status(200).entity(userModel).build();
-    }
-
-    @GET
-    public String login() {
-        System.out.println("AAAAAAAAAAAAAAa");
-        return "Im here";
+        return Response.status(200).entity(new LoginRequestDTO() {{
+            user = userModel.username;
+            token = authenticationService.generateNewTokenForUser(userModel).token;
+        }}).build();
     }
 }
