@@ -47,7 +47,7 @@ public class PlaylistPersistence {
     public void deletePlaylist(int id) {
         try {
             Connection connection = db.getConnection();
-            PreparedStatement query = connection.prepareStatement("DELETE FROM Playlist WHERE PLAYLISTID = ?");
+            PreparedStatement query = connection.prepareStatement("DELETE FROM Playlist WHERE ID = ?");
             query.setInt(1, id);
             query.executeUpdate();
         } catch (RuntimeException | SQLException e) {

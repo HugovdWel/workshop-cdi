@@ -45,6 +45,7 @@ public class PlaylistResource {
 
     @DELETE
     @Path("/{id}")
+    @Produces(APPLICATION_JSON)
     public Response deletePlaylist(@QueryParam("token") String inputToken, @PathParam("id") int id) {
         try {
             UserModel owner = authenticationService.getUsernameForToken(inputToken);
@@ -56,6 +57,7 @@ public class PlaylistResource {
     }
 
     @POST
+    @Produces(APPLICATION_JSON)
     public Response createPlaylist(@QueryParam("token") String inputToken, PlaylistModel newPlaylist) {
         try {
             UserModel owner = authenticationService.getUsernameForToken(inputToken);
@@ -68,6 +70,7 @@ public class PlaylistResource {
 
     @PUT
     @Path("/{id}")
+    @Produces(APPLICATION_JSON)
     public Response editPlaylist(@QueryParam("token") String inputToken, PlaylistModel newPlaylist, @PathParam("id") int id) {
         try {
             UserModel owner = authenticationService.getUsernameForToken(inputToken);
@@ -80,12 +83,14 @@ public class PlaylistResource {
 
     @GET
     @Path("/{id}/tracks")
+    @Produces(APPLICATION_JSON)
     public Response getAllTracksInPlaylist(@QueryParam("token") String inputToken, @PathParam("id") int id) {
         return Response.status(200).entity(this.playlistService.getTracksInPlaylist(id)).build();
     }
 
     @POST
     @Path("/{id}/tracks")
+    @Produces(APPLICATION_JSON)
     public Response addTrackToPlaylist(@QueryParam("token") String inputToken, @PathParam("id") int id, TrackModel track) {
         this.playlistService.addTrackToPlaylist(id, track);
         return Response.status(200).entity(this.playlistService.getTracksInPlaylist(id)).build();
@@ -93,6 +98,7 @@ public class PlaylistResource {
 
     @DELETE
     @Path("/{playlistId}/tracks/{trackId}")
+    @Produces(APPLICATION_JSON)
     public Response removeTrackFromPlaylist(@QueryParam("token") String inputToken, @PathParam("playlistId") int playlistId, @PathParam("trackId") int trackId) {
         this.playlistService.removeTrackFromPlaylist(playlistId, trackId);
         return Response.status(200).entity(this.playlistService.getTracksInPlaylist(playlistId)).build();
