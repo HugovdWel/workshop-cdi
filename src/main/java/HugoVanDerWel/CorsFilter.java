@@ -1,4 +1,4 @@
-package HugoVanDerWel.Providers;
+package HugoVanDerWel;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
@@ -13,8 +13,14 @@ public class CorsFilter implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext requestContext,
                        ContainerResponseContext responseContext) throws IOException {
+        String requestUrl;
+        try {
+            requestUrl = requestContext.getHeaders().get("Origin").get(0);
+        } catch (RuntimeException ignored) {
+            requestUrl = "*";
+        }
         responseContext.getHeaders().add(
-                "Access-Control-Allow-Origin", "*");
+                "Access-Control-Allow-Origin", requestUrl);
         responseContext.getHeaders().add(
                 "Access-Control-Allow-Credentials", "true");
         responseContext.getHeaders().add(
