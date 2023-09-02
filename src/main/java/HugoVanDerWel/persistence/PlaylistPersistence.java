@@ -1,5 +1,6 @@
 package HugoVanDerWel.persistence;
 
+import HugoVanDerWel.mappers.TrackMapper;
 import HugoVanDerWel.models.PlaylistModel;
 import HugoVanDerWel.models.TrackModel;
 import HugoVanDerWel.models.UserModel;
@@ -91,17 +92,7 @@ public class PlaylistPersistence {
             ResultSet resultset = query.executeQuery();
             List<TrackModel> tracks = new ArrayList<>();
             while (resultset.next()) {
-                tracks.add(new TrackModel() {{
-                    id = resultset.getInt("trackId");
-                    title = resultset.getString("title");
-                    performer = resultset.getString("performer");
-                    duration = resultset.getInt("duration");
-                    album = resultset.getString("album");
-//                    playcount = resultset.get;
-                    publicationDate = resultset.getDate("publicationdate");
-                    description = resultset.getString("description");
-                    offlineAvailable = resultset.getBoolean("offlineAvailable");
-                }});
+                tracks.add(TrackMapper.mapResultsetToTrackmodel(resultset));
             }
             if(tracks.isEmpty()) return new TrackModel[]{};
             connection.close();
@@ -114,20 +105,12 @@ public class PlaylistPersistence {
     public TrackModel[] getTracksNotInPlaylist(int playlistId) {
         try {
             Connection connection = db.getConnection();
-            PreparedStatement query = connection.prepareStatement("SELECT t.trackId, title, performer, duration, album, publicationdate, description FROM Track t WHERE trackId NOT IN (SELECT trackId FROM Track_in_playlist where playlistId = ?)");
+            PreparedStatement query = connection.prepareStatement("SELECT t.trackId, title, performer, duration, album, publicationdate, description, 0 as 'offlineAvailable' FROM Track t WHERE trackId NOT IN (SELECT trackId FROM Track_in_playlist where playlistId = ?)");
             query.setInt(1, playlistId);
             ResultSet resultset = query.executeQuery();
             List<TrackModel> tracks = new ArrayList<>();
             while (resultset.next()) {
-                tracks.add(new TrackModel() {{
-                    id = resultset.getInt("trackId");
-                    title = resultset.getString("title");
-                    performer = resultset.getString("performer");
-                    duration = resultset.getInt("duration");
-                    album = resultset.getString("album");
-                    publicationDate = resultset.getDate("publicationdate");
-                    description = resultset.getString("description");
-                }});
+                tracks.add(TrackMapper.mapResultsetToTrackmodel(resultset));
             }
             if(tracks.isEmpty()) return new TrackModel[]{};
             connection.close();
