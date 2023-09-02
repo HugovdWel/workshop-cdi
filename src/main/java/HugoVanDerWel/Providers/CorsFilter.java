@@ -1,4 +1,4 @@
-package HugoVanDerWel;
+package HugoVanDerWel.Providers;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
