@@ -86,7 +86,7 @@ public class PlaylistPersistence {
     public TrackModel[] getTracksInPlaylist(int playlistId) {
         try {
             Connection connection = db.getConnection();
-            PreparedStatement query = connection.prepareStatement("SELECT t.trackId, title, performer, duration, album, publicationdate, description  FROM Track t left join Track_in_playlist p ON t.trackId = p.trackId WHERE playlistId = ?");
+            PreparedStatement query = connection.prepareStatement("SELECT t.trackId, title, performer, duration, album, publicationdate, description, p.offlineAvailable  FROM Track t left join Track_in_playlist p ON t.trackId = p.trackId WHERE playlistId = ?");
             query.setInt(1, playlistId);
             ResultSet resultset = query.executeQuery();
             List<TrackModel> tracks = new ArrayList<>();
@@ -100,7 +100,7 @@ public class PlaylistPersistence {
 //                    playcount = resultset.get;
                     publicationDate = resultset.getDate("publicationdate");
                     description = resultset.getString("description");
-//                    offlineAvailable = resultset.get;
+                    offlineAvailable = resultset.getBoolean("offlineAvailable");
                 }});
             }
             if(tracks.isEmpty()) return new TrackModel[]{};
