@@ -29,7 +29,6 @@ public class Database {
 
     public Connection getConnection() {
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             return DriverManager.getConnection(connectionURL);
         } catch (Exception e) {
             throw new RuntimeException("Failed establishing database connection.");
