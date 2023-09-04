@@ -1,56 +1,38 @@
 package HugoVanDerWel.services;
 
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 public class Database {
-//    private List<DatabaseModel> databases;
-//    private DatabaseModel currentDatabase;
-    private final String connectionURL = "jdbc:sqlserver://localhost:1433;databaseName=Spotitube;user=Spotitube;password=AppelTaart;encrypt=true;trustServerCertificate=true";
+
+    private final String connectionURL;
 
 
     public Database() {
-//        databases = new ArrayList<>();
-//        addNewDatabase("", "jdbc:sqlserver://localhost\\\\sqlexpress", "Spotitube", "AppelTaart");
-//        currentDatabase = databases.get(0);
-    }
+        try {
+            Properties properties = new Properties();
+            properties.load(getClass().getClassLoader().getResourceAsStream("database.properties"));
+            Class.forName(properties.getProperty("driver"));
 
-//    public void addNewDatabase(String databaseType, String url, String username, String password) {
-//        DatabaseModel databaseModel = new DatabaseModel();
-//
-//        this.databases.add(databaseModel);
-//    }
+            connectionURL = properties.getProperty("connectionString");
+        } catch (IOException | RuntimeException e) {
+            throw new RuntimeException("A database connection error has occurred.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     public Connection getConnection() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             return DriverManager.getConnection(connectionURL);
         } catch (Exception e) {
-            throw new RuntimeException("Failed establishing database connection: " + e.getMessage(), e.getCause());
+            throw new RuntimeException("Failed establishing database connection.");
         }
     }
-
-//    public void switchDatabase(int database) {
-//        try {
-//            currentDatabase = databases.get(database);
-//        } catch (RuntimeException e) {
-//            throw new RuntimeException("Database switch error");
-//        }
-//    }
-
-//    public ResultSet executeQuery(String query, String[] attributes) {
-//        try (Connection con = DriverManager
-//                .getConnection(connectionURL)) {
-//            PreparedStatement preparedStatement = con.prepareStatement(query);
-//            if (attributes.length > 0) {
-//                for (int attributeNumber = 1; attributeNumber <= attributes.length; attributeNumber++) {
-//                    preparedStatement.setString(attributeNumber, attributes[attributeNumber]);
-//                }
-//            }
-//            return preparedStatement.executeQuery();
-//        } catch (SQLException e) {
-//            throw new RuntimeException("A database error has occurred" + e.getErrorCode());
-//        }
-//    }
 }
