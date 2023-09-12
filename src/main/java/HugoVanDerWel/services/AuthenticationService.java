@@ -9,47 +9,57 @@ import jakarta.inject.Inject;
 import java.util.Objects;
 import java.util.Random;
 
-public class AuthenticationService implements IAuthenticationService {
+public class AuthenticationService {
     private UserPersistence userPersistence;
 
     @Inject
-    public AuthenticationService(UserPersistence userPersistence){
+    public AuthenticationService(UserPersistence userPersistence) {
         this.userPersistence = userPersistence;
     }
 
-    public boolean verifyPassword(UserModel userModel){
-        try{
+    public boolean verifyPassword(UserModel userModel) {
+        try {
             String inputPassword = userModel.password;
             return userPersistence.getPasswordForUser(userModel).password.equals(inputPassword);
-        } catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             return false;
         }
     }
 
-    public boolean verifyToken(UserModel userModel){
-        try{
+    public boolean verifyToken(UserModel userModel) {
+        try {
             return Objects.equals(userPersistence.getTokenForUser(userModel).token, userModel.token);
-        } catch (UnauthorizedException e){
+        } catch (UnauthorizedException | UserNotFoundException e) {
             return false;
         }
     }
 
-    public UserModel generateNewTokenForUser(UserModel userModel){
+    public UserModel generateNewTokenForUser(UserModel userModel) {
         return userPersistence.setTokenForUser(userModel, this.generateToken());
     }
 
-    public UserModel getUsernameForToken(String inputToken){
-        if(inputToken == null){
-            throw new UnauthorizedException();
-        }
-        try{
-        return this.userPersistence.getUsernameForToken(new UserModel(){{token = inputToken;}});
+    public UserModel getUsernameForToken(String inputToken) {
+        try {
+            return this.userPersistence.getUsernameForToken(new UserModel() {{
+                token = inputToken;
+            }});
         } catch (RuntimeException e) {
             throw new UnauthorizedException();
         }
     }
 
-    private String generateToken(){
+    public boolean isTokenActive(String inputToken) {
+        try {
+            this.userPersistence.getUsernameForToken(new UserModel() {{
+                token = inputToken;
+            }});
+            return true;
+        } catch (RuntimeException e) {
+            return false;
+        }
+    }
+
+    private String generateToken() {
         Random random = new Random();
         int token = random.nextInt(100000, 999999);
         return String.valueOf(token);

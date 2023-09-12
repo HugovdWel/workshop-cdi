@@ -34,9 +34,9 @@ public class PlaylistResource {
         try {
             UserModel owner = authenticationService.getUsernameForToken(inputToken);
             PlayListsDTO playListsDTO = this.playlistService.getAllPlaylists(owner);
-            if(playListsDTO.length == 0){
-                return Response.status(204).build();
-            }
+//            if(playListsDTO.length == 0){             Unnecessary?
+//                return Response.status(204).build();
+//            }
             return Response.status(200).entity(playListsDTO).build();
         } catch (UnauthorizedException e) {
             return Response.status(403).build();
@@ -49,6 +49,7 @@ public class PlaylistResource {
     public Response deletePlaylist(@QueryParam("token") String inputToken, @PathParam("id") int id) {
         try {
             UserModel owner = authenticationService.getUsernameForToken(inputToken);
+            playlistService.checkIfUserMayEditPlaylist(owner, id);
             this.playlistService.deletePlaylist(id);
             return Response.status(200).entity(this.playlistService.getAllPlaylists(owner)).build();
         } catch (UnauthorizedException e) {
@@ -85,13 +86,19 @@ public class PlaylistResource {
     @Path("/{id}/tracks")
     @Produces(APPLICATION_JSON)
     public Response getAllTracksInPlaylist(@QueryParam("token") String inputToken, @PathParam("id") int id) {
+        if(!authenticationService.isTokenActive(inputToken)){
+            return Response.status(403).build();
+        }
         return Response.status(200).entity(this.playlistService.getTracksInPlaylist(id)).build();
     }
 
     @POST
     @Path("/{id}/tracks")
-    @Produces(APPLICATION_JSON) // TODO: Does not accept undefined, works otherwise
+    @Produces(APPLICATION_JSON)
     public Response addTrackToPlaylist(@QueryParam("token") String inputToken, @PathParam("id") int playlistId, TrackModel track) {
+        if(!authenticationService.isTokenActive(inputToken)){
+            return Response.status(403).build();
+        }
         this.playlistService.addTrackToPlaylist(playlistId, track);
         return Response.status(200).entity(this.playlistService.getTracksInPlaylist(playlistId)).build();
     }
@@ -100,6 +107,9 @@ public class PlaylistResource {
     @Path("/{playlistId}/tracks/{trackId}")
     @Produces(APPLICATION_JSON)
     public Response removeTrackFromPlaylist(@QueryParam("token") String inputToken, @PathParam("playlistId") int playlistId, @PathParam("trackId") int trackId) {
+        if(!authenticationService.isTokenActive(inputToken)){
+            return Response.status(403).build();
+        }
         this.playlistService.removeTrackFromPlaylist(playlistId, trackId);
         return Response.status(200).entity(this.playlistService.getTracksInPlaylist(playlistId)).build();
     }

@@ -27,7 +27,9 @@ public class TrackResource {
 
     @GET
     @Produces(APPLICATION_JSON)
-    public Response getAvailableTracksForPlaylist(@QueryParam("token") int token, @QueryParam("forPlaylist") int playlistId ){
-        return Response.status(200).entity(playlistService.getTracksNotInPlaylist(playlistId)).build();
+    public Response getAvailableTracksForPlaylist(@QueryParam("token") String token, @QueryParam("forPlaylist") int playlistId ){
+        if(!authenticationService.isTokenActive(token)){
+            return Response.status(403).build();
+        }return Response.status(200).entity(playlistService.getTracksNotInPlaylist(playlistId)).build();
     }
 }

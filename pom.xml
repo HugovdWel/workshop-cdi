@@ -21,6 +21,13 @@
     </properties>
 
     <dependencies>
+                <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-client -->
+                <dependency>
+                    <groupId>org.jboss.resteasy</groupId>
+                    <artifactId>resteasy-client</artifactId>
+                    <version>6.2.5.Final</version>
+                </dependency>
+
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
@@ -34,6 +41,7 @@
             <version>12.4.0.jre11</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -53,6 +61,7 @@
             <version>5.4.0</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>

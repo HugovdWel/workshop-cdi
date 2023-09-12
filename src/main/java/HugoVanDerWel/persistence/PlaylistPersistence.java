@@ -146,4 +146,21 @@ public class PlaylistPersistence {
             throw new RuntimeException("A database error has occurred.");
         }
     }
+
+    public UserModel getOwnerForPlaylist(int playlistId) {
+        try {
+            Connection connection = db.getConnection();
+            PreparedStatement query = connection.prepareStatement("SELECT owner FROM Playlist WHERE id = ?");
+            query.setInt(1, playlistId);
+            ResultSet resultset = query.executeQuery();
+            UserModel owner = new UserModel();
+            while (resultset.next()) {
+                owner.username = resultset.getString("owner");
+            }
+            connection.close();
+            return owner;
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("A database error has occurred.");
+        }
+    }
 }
