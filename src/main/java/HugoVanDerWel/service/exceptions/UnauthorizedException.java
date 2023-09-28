@@ -1,4 +1,4 @@
-package HugoVanDerWel.exceptions;
+package HugoVanDerWel.service.exceptions;
 
 public class UnauthorizedException extends RuntimeException{
 }

@@ -1,10 +1,10 @@
 package HugoVanDerWel.resources;
 
-import HugoVanDerWel.dataTransferObjects.PlayListsDTO;
-import HugoVanDerWel.dataTransferObjects.TracksDTO;
-import HugoVanDerWel.models.TrackModel;
-import HugoVanDerWel.services.AuthenticationService;
-import HugoVanDerWel.services.PlaylistService;
+import HugoVanDerWel.presentation.dataTransferObjects.TracksDTO;
+import HugoVanDerWel.presentation.resources.TrackResource;
+import HugoVanDerWel.service.models.TrackModel;
+import HugoVanDerWel.service.services.AuthenticationService;
+import HugoVanDerWel.service.services.PlaylistService;
 import HugoVanDerWel.support.TestAuthenticationSupport;
 import jakarta.ws.rs.core.Response;
 import org.junit.Assert;

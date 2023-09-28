@@ -1,17 +1,17 @@
 package HugoVanDerWel.services;
 
-import HugoVanDerWel.dataTransferObjects.PlayListsDTO;
-import HugoVanDerWel.dataTransferObjects.TracksDTO;
-import HugoVanDerWel.exceptions.UnauthorizedException;
-import HugoVanDerWel.models.PlaylistModel;
-import HugoVanDerWel.models.TrackModel;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.persistence.PlaylistPersistence;
+import HugoVanDerWel.presentation.dataTransferObjects.PlayListsDTO;
+import HugoVanDerWel.presentation.dataTransferObjects.TracksDTO;
+import HugoVanDerWel.service.exceptions.UnauthorizedException;
+import HugoVanDerWel.service.models.PlaylistModel;
+import HugoVanDerWel.service.models.TrackModel;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.data.persistence.PlaylistPersistence;
+import HugoVanDerWel.service.services.PlaylistService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mockito;
 
 import static org.mockito.AdditionalMatchers.not;

@@ -1,9 +1,9 @@
-package HugoVanDerWel.persistence;
+package HugoVanDerWel.data.persistence;
 
-import HugoVanDerWel.exceptions.NoRecordsFoundException;
-import HugoVanDerWel.exceptions.UserNotFoundException;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.services.Database;
+import HugoVanDerWel.service.exceptions.NoRecordsFoundException;
+import HugoVanDerWel.service.exceptions.UserNotFoundException;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.service.services.Database;
 import jakarta.inject.Inject;
 
 import java.sql.Connection;

@@ -1,13 +1,14 @@
 package HugoVanDerWel.resources;
 
-import HugoVanDerWel.dataTransferObjects.PlayListsDTO;
-import HugoVanDerWel.dataTransferObjects.TracksDTO;
-import HugoVanDerWel.exceptions.UnauthorizedException;
-import HugoVanDerWel.models.PlaylistModel;
-import HugoVanDerWel.models.TrackModel;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.services.AuthenticationService;
-import HugoVanDerWel.services.PlaylistService;
+import HugoVanDerWel.presentation.dataTransferObjects.PlayListsDTO;
+import HugoVanDerWel.presentation.dataTransferObjects.TracksDTO;
+import HugoVanDerWel.presentation.resources.PlaylistResource;
+import HugoVanDerWel.service.exceptions.UnauthorizedException;
+import HugoVanDerWel.service.models.PlaylistModel;
+import HugoVanDerWel.service.models.TrackModel;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.service.services.AuthenticationService;
+import HugoVanDerWel.service.services.PlaylistService;
 import HugoVanDerWel.support.TestAuthenticationSupport;
 import jakarta.ws.rs.core.Response;
 import org.junit.Assert;

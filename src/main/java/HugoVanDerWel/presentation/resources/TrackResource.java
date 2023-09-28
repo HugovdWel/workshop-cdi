@@ -1,7 +1,7 @@
-package HugoVanDerWel.resources;
+package HugoVanDerWel.presentation.resources;
 
-import HugoVanDerWel.services.AuthenticationService;
-import HugoVanDerWel.services.PlaylistService;
+import HugoVanDerWel.service.services.AuthenticationService;
+import HugoVanDerWel.service.services.PlaylistService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

@@ -1,8 +1,9 @@
 package HugoVanDerWel.resources;
 
-import HugoVanDerWel.dataTransferObjects.LoginRequestDTO;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.services.AuthenticationService;
+import HugoVanDerWel.presentation.dataTransferObjects.LoginRequestDTO;
+import HugoVanDerWel.presentation.resources.LoginResource;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.service.services.AuthenticationService;
 import HugoVanDerWel.support.TestAuthenticationSupport;
 import jakarta.ws.rs.core.Response;
 import org.junit.Assert;

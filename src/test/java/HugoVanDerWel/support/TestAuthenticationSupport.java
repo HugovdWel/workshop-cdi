@@ -1,8 +1,8 @@
 package HugoVanDerWel.support;
 
-import HugoVanDerWel.exceptions.UnauthorizedException;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.services.AuthenticationService;
+import HugoVanDerWel.service.exceptions.UnauthorizedException;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.service.services.AuthenticationService;
 import org.mockito.Mockito;
 
 public class TestAuthenticationSupport {

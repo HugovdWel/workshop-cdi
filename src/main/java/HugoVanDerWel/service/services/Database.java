@@ -1,4 +1,4 @@
-package HugoVanDerWel.services;
+package HugoVanDerWel.service.services;
 
 
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.util.Properties;
 public class Database {
 
     private final String connectionURL;
-
 
     public Database() {
         try {

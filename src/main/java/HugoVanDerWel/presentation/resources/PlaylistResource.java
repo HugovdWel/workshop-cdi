@@ -1,12 +1,12 @@
-package HugoVanDerWel.resources;
+package HugoVanDerWel.presentation.resources;
 
-import HugoVanDerWel.dataTransferObjects.PlayListsDTO;
-import HugoVanDerWel.exceptions.UnauthorizedException;
-import HugoVanDerWel.models.PlaylistModel;
-import HugoVanDerWel.models.TrackModel;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.services.AuthenticationService;
-import HugoVanDerWel.services.PlaylistService;
+import HugoVanDerWel.presentation.dataTransferObjects.PlayListsDTO;
+import HugoVanDerWel.service.exceptions.UnauthorizedException;
+import HugoVanDerWel.service.models.PlaylistModel;
+import HugoVanDerWel.service.models.TrackModel;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.service.services.AuthenticationService;
+import HugoVanDerWel.service.services.PlaylistService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 

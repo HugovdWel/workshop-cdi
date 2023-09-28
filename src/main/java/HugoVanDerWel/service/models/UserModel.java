@@ -1,4 +1,4 @@
-package HugoVanDerWel.models;
+package HugoVanDerWel.service.models;
 
 public class UserModel {
     public String username;

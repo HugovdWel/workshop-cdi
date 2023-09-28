@@ -1,9 +1,10 @@
 package HugoVanDerWel.services;
 
-import HugoVanDerWel.exceptions.UnauthorizedException;
-import HugoVanDerWel.exceptions.UserNotFoundException;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.persistence.UserPersistence;
+import HugoVanDerWel.service.exceptions.UnauthorizedException;
+import HugoVanDerWel.service.exceptions.UserNotFoundException;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.data.persistence.UserPersistence;
+import HugoVanDerWel.service.services.AuthenticationService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

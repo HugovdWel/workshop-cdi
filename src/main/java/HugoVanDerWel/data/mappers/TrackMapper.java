@@ -1,6 +1,6 @@
-package HugoVanDerWel.mappers;
+package HugoVanDerWel.data.mappers;
 
-import HugoVanDerWel.models.TrackModel;
+import HugoVanDerWel.service.models.TrackModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +14,6 @@ public class TrackMapper {
             performer = resultSet.getString("performer");
             duration = resultSet.getInt("duration");
             album = resultSet.getString("album");
-//                    playcount = resultSet.get;
             publicationDate = resultSet.getDate("publicationdate");
             description = resultSet.getString("description");
             offlineAvailable = resultSet.getBoolean("offlineAvailable");

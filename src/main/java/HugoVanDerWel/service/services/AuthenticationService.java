@@ -1,11 +1,14 @@
-package HugoVanDerWel.services;
+package HugoVanDerWel.service.services;
 
-import HugoVanDerWel.exceptions.UnauthorizedException;
-import HugoVanDerWel.exceptions.UserNotFoundException;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.persistence.UserPersistence;
+import HugoVanDerWel.service.exceptions.UnauthorizedException;
+import HugoVanDerWel.service.exceptions.UserNotFoundException;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.data.persistence.UserPersistence;
 import jakarta.inject.Inject;
+import jakarta.xml.bind.DatatypeConverter;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.Random;
 
@@ -19,10 +22,17 @@ public class AuthenticationService {
 
     public boolean verifyPassword(UserModel userModel) {
         try {
-            String inputPassword = userModel.password;
-            return userPersistence.getPasswordForUser(userModel).password.equals(inputPassword);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(userModel.password.getBytes());
+            byte[] digest = md.digest();
+            String hash = DatatypeConverter
+                    .printHexBinary(digest).toUpperCase();
+
+            return userPersistence.getPasswordForUser(userModel).password.equals(hash);
         } catch (UserNotFoundException e) {
             return false;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 

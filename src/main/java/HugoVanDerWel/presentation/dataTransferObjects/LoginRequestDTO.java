@@ -1,4 +1,4 @@
-package HugoVanDerWel.dataTransferObjects;
+package HugoVanDerWel.presentation.dataTransferObjects;
 
 public class LoginRequestDTO {
 

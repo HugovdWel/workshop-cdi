@@ -1,10 +1,10 @@
-package HugoVanDerWel.persistence;
+package HugoVanDerWel.data.persistence;
 
-import HugoVanDerWel.mappers.TrackMapper;
-import HugoVanDerWel.models.PlaylistModel;
-import HugoVanDerWel.models.TrackModel;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.services.Database;
+import HugoVanDerWel.data.mappers.TrackMapper;
+import HugoVanDerWel.service.models.PlaylistModel;
+import HugoVanDerWel.service.models.TrackModel;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.service.services.Database;
 import jakarta.inject.Inject;
 
 import java.sql.Connection;

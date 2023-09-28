@@ -1,8 +1,8 @@
-package HugoVanDerWel.resources;
+package HugoVanDerWel.presentation.resources;
 
-import HugoVanDerWel.dataTransferObjects.LoginRequestDTO;
-import HugoVanDerWel.models.UserModel;
-import HugoVanDerWel.services.AuthenticationService;
+import HugoVanDerWel.presentation.dataTransferObjects.LoginRequestDTO;
+import HugoVanDerWel.service.models.UserModel;
+import HugoVanDerWel.service.services.AuthenticationService;
 import jakarta.inject.Inject;
 
 import jakarta.ws.rs.*;

@@ -1,4 +1,4 @@
-package HugoVanDerWel.models;
+package HugoVanDerWel.service.models;
 
 import java.util.Date;
 
